@@ -1,24 +1,20 @@
 var scraper = require('..');
 
 var parsers = {
-    'http://www.google.com': function(response) {
-        var self = this;
-        this.item({google: response.request.meta.offset});
-    	this.scrape({url: 'http://www.yahoo.com'})
-    	    .on('item', function(item) {
-                self.item({value: item});
-            })
-            .on('timeout', function(parser) {
-                console.log('timeout: ', parser.id);
-            })
-            .on('end', function() {
-                self.end(); 
-            });
+    'http://www.google.com': {
+        parse: function(response) {
+            var self = this;
+            this.item({google: self.args.x});
+            this.scrape({url: 'http://www.yahoo.com'})
+                .on('item', function(item) {
+                    self.item({value: item});
+                })
+                .on('end', function() {
+                    self.end(); 
+                });
+        }
     },
-
-    'yahoo': {
-        timeout: 10,
-        match: 'http://www.yahoo.com',
+    'http://www.yahoo.com': {
         parse: function(response) {
             var self = this;
             this.request({url: 'http://web.mit.edu'});
@@ -36,17 +32,18 @@ var parsers = {
 
 var test = scraper.define('test scraper', parsers);
 
-var scrape = test.scrape({
-    url: 'http://www.google.com',
-    meta: {
-        offset: 7,
-        name: 'test'
-    }});
+// var scrape = test.scrape({
+//         url: 'http://www.google.com'
+//     }, {
+//         x: 17
+//     });
 
-scrape
-    .on('item', function(item) {
-        console.log('got: ', item);
-    })
-    .on('end', function(item) {
-        console.log('done! ');
-    })
+// scrape
+//     .on('item', function(item) {
+//         console.log('got: ', item);
+//     })
+//     .on('end', function(item) {
+//         console.log('done! ');
+//     })
+
+test.debug(7000);
