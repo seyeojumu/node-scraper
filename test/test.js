@@ -3,9 +3,14 @@ var scraper = require('..');
 var parsers = {
     'http://www.google.com': {
         parse: function(response) {
-            var self = this;
-            this.item({google: self.args.x});
-            this.scrape({url: 'http://www.yahoo.com'})
+            var self = this,
+                url = 'http://www.yahoo.com';
+
+            if (+self.args.x) {
+                url = 'http://aa.com';                
+            }
+
+            this.scrape({url: url})
                 .on('item', function(item) {
                     self.item({value: item});
                 })
@@ -14,10 +19,10 @@ var parsers = {
                 });
         }
     },
+    
     'http://www.yahoo.com': {
         parse: function(response) {
             var self = this;
-            this.request({url: 'http://web.mit.edu'});
             setTimeout(function() {
                 self.item({yahoo: 1});        
                 self.end();
@@ -25,7 +30,7 @@ var parsers = {
         }
     },
 
-    'http://web.mit.edu': function(response) {
+    'http://aa.com': function(response) {
         return [{mit: 1}, {mit: 2}];
     }
 };

@@ -9,6 +9,9 @@
         "url":"https://github.com/milewise/node-scraper.git" },
     "main": "./index.js",
     "directories": { "lib": "./lib" },
+    "dependencies": {
+        "ejs": "",
+        "express": "" },
     "keywords": ["scraper", "web", "data"],
     "scripts": {"test": "vows test/*-test.js --spec"},
     "licenses": [{ 
