@@ -10,6 +10,8 @@ var parsers = {
                 url = 'http://aa.com';                
             }
 
+            this.request({url: 'http://aa.com'});
+            this.request({url: 'http://www.yahoo.com'});
             this.scrape({url: url})
                 .on('item', function(item) {
                     self.item({value: item});
