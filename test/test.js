@@ -2,7 +2,7 @@ var scraper = require('..');
 
 var parsers = {
     'http://www.google.com': {
-        parse: function(response) {
+        parse: function($) {
             var self = this,
                 url = 'http://www.yahoo.com';
 
@@ -23,7 +23,7 @@ var parsers = {
     },
     
     'http://www.yahoo.com': {
-        parse: function(response) {
+        parse: function($) {
             var self = this;
             setTimeout(function() {
                 self.item({yahoo: 1});        
@@ -32,25 +32,23 @@ var parsers = {
         }
     },
 
-    'http://aa.com': function(response) {
-        return [{mit: 1}, {mit: 2}];
+    'http://aa.com': function($) {
+        return [{foo: $('#aa-hp-module-tabs span').text()}];
     }
 };
 
 var test = scraper.define('test scraper', parsers);
 
-// var scrape = test.scrape({
-//         url: 'http://www.google.com'
-//     }, {
-//         x: 17
-//     });
+var scrape = test.scrape({
+        url: 'http://aa.com'
+    });
 
-// scrape
-//     .on('item', function(item) {
-//         console.log('got: ', item);
-//     })
-//     .on('end', function(item) {
-//         console.log('done! ');
-//     })
+scrape
+    .on('item', function(item) {
+        console.log('got: ', item);
+    })
+    .on('end', function(item) {
+        console.log('done! ');
+    })
 
-test.debug(7000);
+// test.debug(7000);
