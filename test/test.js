@@ -6,10 +6,6 @@ var parsers = {
             var self = this,
                 url = 'http://www.yahoo.com';
 
-            if (+self.args.x) {
-                url = 'http://aa.com';                
-            }
-
             this.request({url: 'http://aa.com'});
             this.request({url: 'http://www.yahoo.com'});
             this.scrape({url: url})
@@ -30,10 +26,6 @@ var parsers = {
                 self.end();
             }, 2000);
         }
-    },
-
-    'http://aa.com': function($) {
-        return [{foo: $('#aa-hp-module-tabs span').text()}];
     }
 };
 
